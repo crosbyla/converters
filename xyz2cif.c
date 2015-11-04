@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 int main() {
     FILE *fp;
@@ -9,7 +10,7 @@ int main() {
 
     double** A;
     double *data;
-    char** Element; 
+    char** Element;
     char* symbol;
 
     fp = fopen(filename, "r");
@@ -37,6 +38,12 @@ int main() {
 
             i++;
         }
+
+        for(i = 0; i < lines; i++){
+            for(j=0; j < 3; j++)
+                A[i][j] *= sin
+        }
+        
         free(data);
         free(A);
         int k;
@@ -45,10 +52,10 @@ int main() {
         free(Element);
 
         printf("%d \n",lines);
-        fclose(fp);
     } else {
         printf("File not found !\n");
     }
 
+    fclose(fp);
     return 0;
 }

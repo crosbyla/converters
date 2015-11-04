@@ -34,7 +34,7 @@ int main() {
             sscanf(buffer, "%s %lf %lf %lf",Element[i], &A[i][0], &A[i][1], &A[i][2]);
             printf("%s %lf %lf %lf",Element[i], A[i][0],A[i][1], A[i][2]);
             printf("\n");
-            
+
             i++;
         }
         free(data);

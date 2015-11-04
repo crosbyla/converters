@@ -50,10 +50,10 @@ int main() {
         free(Element);
 
         printf("%d \n",lines);
+        fclose(fp);
     } else {
         printf("File not found !\n");
     }
 
-    fclose(fp);
     return 0;
 }

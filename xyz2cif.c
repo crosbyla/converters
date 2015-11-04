@@ -17,8 +17,7 @@ int main() {
     if (fp != NULL){
         while(fgets(buffer, sizeof(buffer), fp) != NULL){
            lines++;
-        }
-        fseek(fp, 0, SEEK_SET);
+        } fseek(fp, 0, SEEK_SET);
         int i = 0;
         data = (double*) malloc(sizeof(double)*lines*3);
         A = (double**) malloc(sizeof(double*)*lines);
@@ -40,10 +39,9 @@ int main() {
         }
 
         for(i = 0; i < lines; i++){
-            for(j=0; j < 3; j++)
-                A[i][j] *= sin
+            A[i][0] *= 0.707;
+            A[i][1] *= -0.707;
         }
-        
         free(data);
         free(A);
         int k;

@@ -3,5 +3,5 @@ TARGET = xyz2cif.c
 CC = gcc
 
 default: all
-all: 
-	gcc ${TARGET}
+all:
+	gcc ${TARGET} -o xyz2cif

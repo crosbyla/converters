@@ -5,21 +5,16 @@ def convert2cif(file_name):
         #read in file
         f = fp.read()
 
-    for line in f:
-        #iterate over lines in file
-        if line.strip():
-            
-        else :
-            continue
-
+    coords = zip((str,float,float,float),f.split())
+    (elem, x, y, z) = [t(s) for t,s in coords]
     file_name += "_coords.cif"
 
     fp = open(file_name,'w')
 
     for line in coords:
-        vals = line.split()
         try :
-            fp.write()
+            print(line)
+        #    fp.write()
         except ValueError:
             pass
     fp.close()

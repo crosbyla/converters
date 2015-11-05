@@ -17,7 +17,8 @@ int main() {
     if (fp != NULL){
         while(fgets(buffer, sizeof(buffer), fp) != NULL){
            lines++;
-        } fseek(fp, 0, SEEK_SET);
+        }
+        fseek(fp, 0, SEEK_SET);
         int i = 0;
         data = (double*) malloc(sizeof(double)*lines*3);
         A = (double**) malloc(sizeof(double*)*lines);
@@ -39,21 +40,26 @@ int main() {
         }
 
         for(i = 0; i < lines; i++){
-            A[i][0] *= 0.707;
-            A[i][1] *= -0.707;
+            for(j=0; j < 3; j++) {
+                double tempX =  A[i][0]*0.707 - A[i][1]*0.707;
+                double tempY =  A[i][0]*0.707 + A[i][1]*0.707;
+                A[i][0] = tempX;
+                A[i][1] = tempY;
+                printf("Rotated Data %s %lf %lf %lf",Element[i], A[i][0],A[i][1], A[i][2]);
+                printf("\n");
+            }
         }
+
         free(data);
         free(A);
         int k;
         for (k = 0; k<lines; k++)
             free(Element[k]);
         free(Element);
-
-        printf("%d \n",lines);
-        fclose(fp);
     } else {
         printf("File not found !\n");
     }
 
+    fclose(fp);
     return 0;
 }

@@ -1,11 +1,10 @@
 #!/usr/bin/python
-
 def convert2cif(file_name):
     with open(file_name) as fp:
         #read in file
         f = fp.read()
 
-    coords = zip((str,float,float,float),f.split())
+    coords = zip((str,float,float,float),f.split('\n'))
     (elem, x, y, z) = [t(s) for t,s in coords]
     file_name += "_coords.cif"
 

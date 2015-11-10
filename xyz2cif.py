@@ -3,16 +3,19 @@ def convert2cif(file_name):
     with open(file_name) as fp:
         #read in file
         f = fp.read()
+    atomlist = []
+    for line in f[2:]:
+        atoms = zip((str,float,float,float),f.split('\n'))
+        (elem, x, y, z) = [t(s) for t,s in atoms]
+        atomlist.append([elem,x,y,z])
 
-    coords = zip((str,float,float,float),f.split('\n'))
-    (elem, x, y, z) = [t(s) for t,s in coords]
     file_name += "_coords.cif"
 
     fp = open(file_name,'w')
 
-    for line in coords:
+    for a in atomlist
         try :
-            print(line)
+            print(a)
         #    fp.write()
         except ValueError:
             pass

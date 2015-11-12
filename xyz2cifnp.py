@@ -5,26 +5,32 @@ from math import sin, cos, radians
 
 def convert2cif(file_name, rot=0):
     print(file_name)
-    with open(file_name,'r') as fp:
-        #read in file
-        f = fp.read()
+
+    elemArray = np.loadtxt(file_name, skiprows=2, usecols=(0,), dtype='S2')
+    coordArray = np.loadtxt(file_name, skiprows=2, usecols=(1,2,3))
 
     outfile_name = file_name + "_coords.cif"
-    fp = open(outfile_name,'w')
 
-    linelist = f.split('\n')
-    coorArray = [ line.split() for line in linelist[2:-1] ]
-    np.arra
-    for line in coorArray:
-        try :
-           coords = zip((str,float,float,float),line.split())
-           (elem, x, y, z) = [u(v) for u,v in coords] # extracts one line from file
+    trans = np.array([  [cos(radians(rot)), -sin(radians(rot)), 0],
+                        [sin(radians(rot)), cos(radians(rot)), 0],
+                        [0, 0, 1] ])
+
+    x = coordArray[:,0], y = coordArray[:,1], z = coordArray[:,2]
+
+    xlim = np.max(x) - np.min(x)
+    ylim = np.max(y) - np.min(y)
+    zlim = np.max(z) - np.min(z)
+
+    x /= xlim
+    y /= ylim
+    z /= zlim
+
+    coordArray = np.dot(coordArray,trans)
+
+
            print("%s %1.6f %1.6f %1.6f" % (elem, x*cos(radians(rot))
                 - y*sin(radians(rot)), x*sin(radians(rot)) + y*cos(radians(rot))
                 , z), file=fp)
-
-        except ValueError:
-            raise
 
     fp.close()
 #convert2cif(sys_name)

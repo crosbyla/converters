@@ -1,7 +1,8 @@
 #!/usr/bin/python
 import sys
+from math import sin, cos, radians
 
-def convert2cif(file_name):
+def convert2cif(file_name, rot=0):
     print(file_name)
     with open(file_name,'r') as fp:
         #read in file
@@ -11,14 +12,16 @@ def convert2cif(file_name):
     fp = open(outfile_name,'w')
 
     linelist = f.split('\n')
-    for line in linelist[2:]:
-    #    try :
-        coords = zip((str,float,float,float),line.split())
-        (elem, x, y, z) = [u(v) for u,v in coords] # extracts one line from file
-        print("%s %1.6f %1.6f %1.6f\n" % (elem, x, y, z), file=fp)
+    for line in linelist[2:-1]:
+        try :
+           coords = zip((str,float,float,float),line.split())
+           (elem, x, y, z) = [u(v) for u,v in coords] # extracts one line from file
+           print("%s %1.6f %1.6f %1.6f" % (elem, x*cos(radians(rot))
+                - y*sin(radians(rot)), x*sin(radians(rot)) + y*cos(radians(rot))
+                , z), file=fp)
 
-    #    except ValueError:
-    #        raise
+        except ValueError:
+            raise
 
     fp.close()
 #convert2cif(sys_name)

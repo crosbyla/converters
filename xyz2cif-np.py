@@ -1,28 +1,32 @@
 #!/usr/bin/python
+import sys
+import numpy as np
+from math import sin, cos, radians
 
-def convert2cif(file_name):
-    with open(file_name) as fp:
+def convert2cif(file_name, rot=0):
+    print(file_name)
+    with open(file_name,'r') as fp:
         #read in file
         f = fp.read()
 
-    for line in f:
-        #iterate over lines in file
-        if line.strip():
-            
-        else :
-            continue
+    outfile_name = file_name + "_coords.cif"
+    fp = open(outfile_name,'w')
 
-    file_name += "_coords.cif"
-
-    fp = open(file_name,'w')
-
-    for line in coords:
-        vals = line.split()
+    linelist = f.split('\n')
+    coorArray = [ line.split() for line in linelist[2:-1] ]
+    np.arra
+    for line in coorArray:
         try :
-            fp.write()
+           coords = zip((str,float,float,float),line.split())
+           (elem, x, y, z) = [u(v) for u,v in coords] # extracts one line from file
+           print("%s %1.6f %1.6f %1.6f" % (elem, x*cos(radians(rot))
+                - y*sin(radians(rot)), x*sin(radians(rot)) + y*cos(radians(rot))
+                , z), file=fp)
+
         except ValueError:
-            pass
+            raise
+
     fp.close()
 #convert2cif(sys_name)
-def __main__ :
-    convert2cif(filename)
+if __name__ == "__main__" :
+    convert2cif(sys.argv)

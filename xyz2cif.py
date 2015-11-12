@@ -11,13 +11,13 @@ def convert2cif(file_name):
     fp = open(outfile_name,'w')
     for line in linelist[2:]:
         try :
-            coords = zip((str,float,float,float),line.split()) 
+            coords = zip((str,float,float,float),line.split())
             (elem, x, y, z) = [t(s) for t,s in coords] # extracts one line from file
             print(elem, x, y, z)
             fp.write("%s %1.6f %1.6f %1.6f \n" % elem, x, y, z)
 
         except ValueError:
-            raise 
+            raise
 
     fp.close()
 #convert2cif(sys_name)

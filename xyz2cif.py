@@ -2,22 +2,23 @@
 import sys
 
 def convert2cif(file_name):
-    with open(file_name) as fp:
+    print(file_name)
+    with open(file_name,'r') as fp:
         #read in file
         f = fp.read()
-    linelist = f.split('\n')
 
     outfile_name = file_name + "_coords.cif"
     fp = open(outfile_name,'w')
-    for line in linelist[2:]:
-        try :
-            coords = zip((str,float,float,float),line.split())
-            (elem, x, y, z) = [t(s) for t,s in coords] # extracts one line from file
-            print(elem, x, y, z)
-            fp.write("%s %1.6f %1.6f %1.6f \n" % elem, x, y, z)
 
-        except ValueError:
-            raise
+    linelist = f.split('\n')
+    for line in linelist[2:]:
+    #    try :
+        coords = zip((str,float,float,float),line.split())
+        (elem, x, y, z) = [u(v) for u,v in coords] # extracts one line from file
+        print("%s %1.6f %1.6f %1.6f\n" % (elem, x, y, z), file=fp)
+
+    #    except ValueError:
+    #        raise
 
     fp.close()
 #convert2cif(sys_name)

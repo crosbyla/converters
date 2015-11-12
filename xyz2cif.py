@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import sys
 
 def convert2cif(file_name):
     with open(file_name) as fp:
@@ -14,11 +15,11 @@ def convert2cif(file_name):
             (elem, x, y, z) = [t(s) for t,s in coords] # extracts one line from file
             print(elem, x, y, z)
             fp.write("%s %1.6f %1.6f %1.6f \n" % elem, x, y, z)
+
         except ValueError:
-            pass
+            raise 
 
     fp.close()
 #convert2cif(sys_name)
-def __main__ () :
-    file_name = 'STO-110.xyz'
-    convert2cif(filename)
+if __name__ == "__main__" :
+    convert2cif(sys.argv)

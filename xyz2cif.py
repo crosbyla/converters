@@ -1,25 +1,25 @@
 #!/usr/bin/python
+import sys
+
 def convert2cif(file_name):
     with open(file_name) as fp:
         #read in file
         f = fp.read()
-    atomlist = []
-    for line in f[2:]:
-        atoms = zip((str,float,float,float),f.split('\n'))
-        (elem, x, y, z) = [t(s) for t,s in atoms]
-        atomlist.append([elem,x,y,z])
+    linelist = f.split('\n')
 
-    file_name += "_coords.cif"
-
-    fp = open(file_name,'w')
-
-    for a in atomlist
+    outfile_name = file_name + "_coords.cif"
+    fp = open(outfile_name,'w')
+    for line in linelist[2:]:
         try :
-            print(a)
-        #    fp.write()
+            coords = zip((str,float,float,float),line.split()) 
+            (elem, x, y, z) = [t(s) for t,s in coords] # extracts one line from file
+            print(elem, x, y, z)
+            fp.write(elem, x, y, z)
+
         except ValueError:
-            pass
+            raise 
+
     fp.close()
 #convert2cif(sys_name)
-def __main__ :
-    convert2cif(filename)
+if __name__ == "__main__" :
+    convert2cif(sys.argv)

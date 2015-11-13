@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import sys
 from numpy import array, dot, min as nmin, max as nmax
 from pandas.io.parsers import read_csv
@@ -13,7 +13,7 @@ def convert2cif(file_name, rot=0):
 
     outfile_name = file_name + "_coords.cif"
 
-    trans = array([  [cos(radians(rot)), -sin(radians(rot)), 0],
+    trans = array([     [cos(radians(rot)), -sin(radians(rot)), 0],
                         [sin(radians(rot)), cos(radians(rot)), 0],
                         [0, 0, 1] ])
     x = coordArray[:,0]
@@ -32,6 +32,11 @@ def convert2cif(file_name, rot=0):
     z /= zlim
 
     coordArray = dot(coordArray,trans)
+    # bug where array is changed but reference to it is
+
+    x = coordArray[:,0]
+    y = coordArray[:,1]
+    z = coordArray[:,2]
 
     fp = open(outfile_name,'w')
     print("data_"+file_name+"_phase\n", file=fp)

@@ -28,18 +28,18 @@ def convert2cif(file_name, rot=0):
     coordArray = np.dot(coordArray,trans)
 
     fp = open(outfile_name,'w')
-    print("data_"+file_name+"_phase", file=fp)
+    print("data_"+file_name+"_phase\n", file=fp)
     print("_symmetry_space_group_name_H-M   'P 1'", file=fp)
 
-    print("%s %f" % ( '_cell_length_a' , xlim , file=fp)
-    print("%s %f" % ( '_cell_length_b' , ylim , file=fp)
-    print("%s %f" % ( '_cell_length_c' , zlim , file=fp)
+    print("%s %f" % ( '_cell_length_a' , xlim ), file=fp)
+    print("%s %f" % ( '_cell_length_b' , ylim ), file=fp)
+    print("%s %f" % ( '_cell_length_c' , zlim ), file=fp)
 
-    print("%s %f" % ( '_cell_angle_alpha' , 90 , file=fp)
-    print("%s %f" % ( '_cell_angle_alpha' , 90 , file=fp)
-    print("%s %f" % ( '_cell_angle_alpha' , 90 , file=fp)
+    print("%s %f" % ( '_cell_angle_alpha' , 90) , file=fp)
+    print("%s %f" % ( '_cell_angle_beta' , 90) , file=fp)
+    print("%s %f" % ( '_cell_angle_gamma' , 90) , file=fp)
 
-    print("loop_\n    _atom_site_type_symbol", file=fp)
+    print("\nloop_\n    _atom_site_type_symbol", file=fp)
     print("    _atom_site_fract_x", file=fp)
     print("    _atom_site_fract_y", file=fp)
     print("    _atom_site_fract_z", file=fp)

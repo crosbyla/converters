@@ -6,7 +6,7 @@ from math import sin, cos, radians
 
 def convert2cif(file_name, rot=0):
     rot = float(rot)
-    df = read_csv(file_name, skiprows=2, header=None, delim_whitespace=True) 
+    df = read_csv(file_name, skiprows=2, header=None, delim_whitespace=True)
 
     elemArray = df.values[:,0].astype(str, copy=False)
     coordArray = df.values[:,1:].astype(float, copy=False)
@@ -46,6 +46,9 @@ def convert2cif(file_name, rot=0):
     print("%s %f" % ( '_cell_angle_beta' , 90) , file=fp)
     print("%s %f" % ( '_cell_angle_gamma' , 90) , file=fp)
 
+    print("\nloop_\n_symmetry_equiv_pos_as_xyz", file=fp)
+    print("    'x, y, z'", file=fp)
+
     print("\nloop_\n    _atom_site_type_symbol", file=fp)
     print("    _atom_site_fract_x", file=fp)
     print("    _atom_site_fract_y", file=fp)
@@ -57,6 +60,11 @@ def convert2cif(file_name, rot=0):
             file=fp)
 
     fp.close()
-#convert2cif(sys_name)
+
 if __name__ == "__main__" :
-    convert2cif(sys.argv[1], sys.argv[2])
+    if len(sys.argv) == 3:
+        convert2cif(sys.argv[1], sys.argv[2])
+    elif len(sys.argv) == 2:
+        convert2cif(sys.argv[1])
+    else :
+        raise ValueError

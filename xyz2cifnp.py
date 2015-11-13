@@ -21,6 +21,10 @@ def convert2cif(file_name, rot=0):
     ylim = np.max(y) - np.min(y)
     zlim = np.max(z) - np.min(z)
 
+    x -= np.min(x)
+    y -= np.min(y)
+    z -= np.min(z)
+
     x /= xlim
     y /= ylim
     z /= zlim

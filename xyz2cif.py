@@ -12,7 +12,9 @@ def convert2cif(file_name, rot=0):
     fp = open(outfile_name,'w')
 
     linelist = f.split('\n')
-    for line in linelist[2:-1]:
+    coorArray = [ line.split() for line in linelist[2:-1] ]
+
+    for line in coorArray:
         try :
            coords = zip((str,float,float,float),line.split())
            (elem, x, y, z) = [u(v) for u,v in coords] # extracts one line from file

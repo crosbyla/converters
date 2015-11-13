@@ -11,7 +11,20 @@ def convert2cif(file_name, rot=0):
     outfile_name = file_name + "_coords.cif"
 
     linelist = f.split('\n')
-    coorArray = [ line.split() for line in linelist[2:-1] ]
+    elems = []
+    x = []
+    y = []
+    z = []
+
+    for line in linelist[2:-1]:
+        elems.append( line.split()[0] )
+        x.append( float(line.split()[1]) )
+        y.append( float(line.split()[2]) )
+        z.append( float(line.split()[3]) )
+
+    xlim = max(x) - min(x)
+    ylim = max(y) - min(y)
+    zlim = max(z) - min(z)
 
     fp = open(outfile_name,'w')
     print("data_"+file_name+"_phase\n", file=fp)
@@ -31,17 +44,13 @@ def convert2cif(file_name, rot=0):
     print("    _atom_site_fract_z", file=fp)
     print("    _atom_site_occupancy", file=fp)
 
-    for line in coorArray:
-        try :
-           coords = zip((str,float,float,float),line.split())
-           (elem, x, y, z) = [u(v) for u,v in coords] # extracts one line from file
-
-           print("%s %1.6f %1.6f %1.6f %1.6f" % (elem, x*cos(radians(rot))
-                - y*sin(radians(rot)), x*sin(radians(rot)) + y*cos(radians(rot))
-                , z, 1), file=fp)
-
-        except ValueError:
-            raise
+    for i,elem in enumerate(elems):
+        x[i] /= xlim
+        y[i] /= ylim
+        z[i] /= zlim
+        print("%s %1.6f %1.6f %1.6f %1.6f" % (elem, x[i]*cos(radians(rot))
+            - y[i]*sin(radians(rot)), x[i]*sin(radians(rot)) + y[i]*cos(radians(rot))
+            , z[i], 1), file=fp)
 
     fp.close()
 #convert2cif(sys_name)

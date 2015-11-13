@@ -9,16 +9,6 @@ elem = np.loadtxt('STO-110.xyz',skiprows=2, usecols=(0,),dtype='S2')
 elem
 data
 np.savetxt('elemout2.txt', (elem,data), fmt='%s %1.6f')
-elem[0]import numpy as np
-data = np.loadtxt('STO-110.xyz',skiprows=2, usecols=(1,2,3))
-trans = np.array([[0.707, -0.707, 0],[.707, .707, 0], [0, 0, 1]])
-data = np.dot(data,trans)
-data
-np.savetxt('testout.txt', data, fmt='%1.6f')
-elem = np.loadtxt('STO-110.xyz',skiprows=2, usecols=(0,),dtype='S2')
-elem
-data
-np.savetxt('elemout2.txt', (elem,data), fmt='%s %1.6f')
 elem[0]
 data
 elem

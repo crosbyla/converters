@@ -6,7 +6,7 @@ from math import sin, cos, radians
 def convert2cif(file_name, rot=0):
     print(file_name)
 
-    elemArray = np.loadtxt(file_name, skiprows=2, usecols=(0,), dtype='S2')
+    elemArray = np.genfromtxt(file_name, skiprows=2, usecols=(0,), dtype=str)
     coordArray = np.loadtxt(file_name, skiprows=2, usecols=(1,2,3))
 
     outfile_name = file_name + "_coords.cif"
@@ -14,8 +14,9 @@ def convert2cif(file_name, rot=0):
     trans = np.array([  [cos(radians(rot)), -sin(radians(rot)), 0],
                         [sin(radians(rot)), cos(radians(rot)), 0],
                         [0, 0, 1] ])
-
-    x = coordArray[:,0], y = coordArray[:,1], z = coordArray[:,2]
+    x = coordArray[:,0]
+    y = coordArray[:,1]
+    z = coordArray[:,2]
 
     xlim = np.max(x) - np.min(x)
     ylim = np.max(y) - np.min(y)
@@ -27,10 +28,10 @@ def convert2cif(file_name, rot=0):
 
     coordArray = np.dot(coordArray,trans)
 
+    fp = open(outfile_name,'w')
 
-           print("%s %1.6f %1.6f %1.6f" % (elem, x*cos(radians(rot))
-                - y*sin(radians(rot)), x*sin(radians(rot)) + y*cos(radians(rot))
-                , z), file=fp)
+    for i, elem in enumerate(elemArray[:]):
+        print("%s %1.6f %1.6f %1.6f" % (elem, x[i], y[i], z[i]), file=fp)
 
     fp.close()
 #convert2cif(sys_name)

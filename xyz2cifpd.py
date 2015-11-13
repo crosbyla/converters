@@ -5,7 +5,7 @@ from pandas.io.parsers import read_csv
 from math import sin, cos, radians
 
 def convert2cif(file_name, rot=0):
-
+    rot = float(rot)
     df = read_csv(file_name, skiprows=2, header=None, delim_whitespace=True) 
 
     elemArray = df.values[:,0].astype(str, copy=False)
@@ -16,6 +16,8 @@ def convert2cif(file_name, rot=0):
     trans = array([     [cos(radians(rot)), -sin(radians(rot)), 0],
                         [sin(radians(rot)), cos(radians(rot)), 0],
                         [0, 0, 1] ])
+    coordArray = dot(coordArray,trans)
+
     x = coordArray[:,0]
     y = coordArray[:,1]
     z = coordArray[:,2]
@@ -31,12 +33,6 @@ def convert2cif(file_name, rot=0):
     z -= nmin(z)
     z /= zlim
 
-    coordArray = dot(coordArray,trans)
-    # bug where array is changed but reference to it is
-
-    x = coordArray[:,0]
-    y = coordArray[:,1]
-    z = coordArray[:,2]
 
     fp = open(outfile_name,'w')
     print("data_"+file_name+"_phase\n", file=fp)
@@ -63,4 +59,4 @@ def convert2cif(file_name, rot=0):
     fp.close()
 #convert2cif(sys_name)
 if __name__ == "__main__" :
-    convert2cif(sys.argv[1])
+    convert2cif(sys.argv[1], sys.argv[2])

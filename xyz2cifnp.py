@@ -13,6 +13,8 @@ def convert2cif(file_name, rot=0):
     trans = np.array([  [cos(radians(rot)), -sin(radians(rot)), 0],
                         [sin(radians(rot)), cos(radians(rot)), 0],
                         [0, 0, 1] ])
+    coordArray = np.dot(coordArray,trans)
+
     x = coordArray[:,0]
     y = coordArray[:,1]
     z = coordArray[:,2]
@@ -22,14 +24,12 @@ def convert2cif(file_name, rot=0):
     zlim = np.max(z) - np.min(z)
 
     x -= np.min(x)
-    y -= np.min(y)
-    z -= np.min(z)
-
     x /= xlim
+    y -= np.min(y)
     y /= ylim
+    y /= ylim
+    z -= np.min(z)
     z /= zlim
-
-    coordArray = np.dot(coordArray,trans)
 
     fp = open(outfile_name,'w')
     print("data_"+file_name+"_phase\n", file=fp)

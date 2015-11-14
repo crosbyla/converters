@@ -4,4 +4,4 @@ CC = gcc
 
 default: all
 all:
-	gcc ${TARGET} -o xyz2cif
+	gcc ${TARGET} -lm -o xyz2cif

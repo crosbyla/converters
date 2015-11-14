@@ -59,7 +59,15 @@ int main(int argc, char **argv) {
         zlim = zmax - zmin;
 
         printf("Xlim %lf Ylim: %lf Zlim: %lf \n", xmin, ymin, zmin);
+
         for(i = 2; i < lines; i++){
+
+            double tempX =  A[i][0]*cos(theta) - A[i][1]*sin(theta);
+            double tempY =  A[i][0]*sin(theta) + A[i][1]*cos(theta);
+
+            A[i][0] = tempX;
+            A[i][1] = tempY;
+
             A[i][0] -= xmin;
             A[i][0] /= xlim;
 
@@ -68,12 +76,6 @@ int main(int argc, char **argv) {
 
             A[i][2] -= zmin;
             A[i][2] /= zlim;
-
-            double tempX =  A[i][0]*cos(theta) - A[i][1]*sin(theta);
-            double tempY =  A[i][0]*sin(theta) + A[i][1]*cos(theta);
-
-            A[i][0] = tempX;
-            A[i][1] = tempY;
 
             printf("%s %lf %lf %lf\n",Element[i], A[i][0],A[i][1], A[i][2]);
         }

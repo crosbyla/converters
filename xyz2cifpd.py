@@ -49,14 +49,15 @@ def convert2cif(file_name, rot=0):
     print("\nloop_\n_symmetry_equiv_pos_as_xyz", file=fp)
     print("    'x, y, z'", file=fp)
 
-    print("\nloop_\n    _atom_site_type_symbol", file=fp)
+    print("\nloop_\n    _atom_site_label", file=fp)
     print("    _atom_site_fract_x", file=fp)
     print("    _atom_site_fract_y", file=fp)
     print("    _atom_site_fract_z", file=fp)
     print("    _atom_site_occupancy", file=fp)
+    print("\nloop_\n    _atom_site_type_symbol", file=fp)
 
     for i, elem in enumerate(elemArray[:]):
-        print("%s %1.6f %1.6f %1.6f %1.6f" % (elem, x[i], y[i], z[i], 1.0),
+        print("%s %1.6f %1.6f %1.6f %1.6f %s" % (elem, x[i], y[i], z[i], 1.0, elem),
             file=fp)
 
     fp.close()

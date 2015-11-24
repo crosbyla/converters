@@ -35,7 +35,7 @@ def convert2cif(file_name, rot=0):
 
 
     fp = open(outfile_name,'w')
-    print("data_"+file_name+"_phase\n", file=fp)
+    print(''.join("data_" + file_name + "_phase\n"), file=fp)
     print("_symmetry_space_group_name_H-M   'P 1'", file=fp)
 
     print("%s %f" % ( '_cell_length_a' , xlim ), file=fp)

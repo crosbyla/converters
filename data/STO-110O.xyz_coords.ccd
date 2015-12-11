@@ -1,0 +1,103 @@
+CRYSCON V2.0  (03/05/09)  Date:     11/17/15  Time:     23:01:23
+File: STO-110O.xyz_coords.cco
+
+Transforming all atoms in unit cells
+
+ Tolerance: 0.4 
+
+ Old unit cell parameters:
+
+ a = 8.283760, b = 5.522500, c = 3.905000
+ alpha = 90.000000, beta = 90.000000, gamma = 90.000000
+ volume = 178.642287
+ Old Symmetry - Custom: P 1
+
+ Pre-symmetry translations:    0.000     0.000     0.000
+
+ Pre-matrix translations:    0.000     0.000     0.000
+
+ Conversion matrix:
+
+    0.000     0.000     0.000
+    0.000     0.000     0.000
+    0.000     0.000     0.000
+
+ Post-matrix translations:    0.000     0.000     0.000
+
+ All atoms in old unit cell (crystal coordinates)
+              Input   Type           Coordinates
+
+    1     Sr     1    38    0.000000  0.000000  0.000000
+    2     Sr     2    38    0.333333  0.500000  0.000000
+    3     Sr     3    38    0.666667  0.000000  0.000000
+    4     Ti     4    22    0.000000  0.500000  0.500000
+    5     Ti     5    22    0.333333  0.000000  0.500000
+    6     Ti     6    22    0.666667  0.500000  0.500000
+    7      O     7     8    0.166667  0.250000  0.500000
+    8      O     8     8    0.500000  0.750000  0.500000
+    9      O     9     8    0.833333  0.250000  0.500000
+   10      O    10     8    0.166667  0.750000  0.500000
+   11      O    11     8    0.500000  0.250000  0.500000
+   12      O    12     8    0.833333  0.750000  0.500000
+   13      O    13     8    0.000000  0.500000  0.000000
+   14      O    14     8    0.333333  0.000000  0.000000
+   15      O    15     8    0.666667  0.500000  0.000000
+
+ New unit cell parameters:
+
+ a = 0.000000, b = 0.000000, c = 0.000000
+ alpha = -1.#IND00, beta = -1.#IND00, gamma = -1.#IND00
+ volume = -1.#IND00, vol. ratio =  -1.#J
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: Ti       22   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: Ti       22   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: Ti       22   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: O         8   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: O         8   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: O         8   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: O         8   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: O         8   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: O         8   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: O         8   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: O         8   0.000000   0.000000   0.000000
+
+Coincident atoms are different types (new lattice vectors)
+    Old atom: Sr       38   0.000000   0.000000   0.000000
+    New atom: O         8   0.000000   0.000000   0.000000
+
+ All atoms in new unit cell (crystal coordinates)
+            Input  Type          Coordinates         No. Avd.
+
+    1      Sr   1  38     0.000000   0.000000   0.000000 15

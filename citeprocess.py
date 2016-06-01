@@ -23,12 +23,11 @@ def processFile(file_name):
 
     lines = f.split('\n')
 
-    fp = open(outfile, 'w')
-    for line in lines:
-        if re.search(PATTERN, line):
-            line = subSeperator(writeCite(re.search(PATTERN, line).group(2)))
-        fp.write(line)
-    fp.close()
+    with open(outfile, 'w') as fp:
+        for line in lines:
+            if re.search(PATTERN, line):
+                line = subSeperator(writeCite(re.search(PATTERN, line).group(2)))
+            fp.write(line)
 
 def main():
     if len(sys.argv) >= 2:

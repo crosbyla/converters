@@ -1,11 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import sys
 import re
-import pandocfilters
-from pandocfilters import walk
-from pandocfilters import Str, toJSONFilter
+from pandocfilters import Str, toJSONFilter, RawInline, Para, walk
 
-PATTERN = re.compile(r"""({{.*}})""",re.VERBOSE)
+PATTERN1= re.compile(r"""({{.*)""",re.VERBOSE)
+PATTERN2= re.compile(r"""(.*}})""",re.VERBOSE)
 
 def subSeperator(string):
     """
@@ -17,15 +16,20 @@ def subSeperator(string):
 def writeCite(string):
     return string.replace(r'{{',r'\cite{').replace(r'}}',r'}')
 
-def processRegex(key, value, fmt, meta):
-    if key == 'Str':
-        fmt, text = value
-        if fmt == 'latex':
-            if re.search(PATTERN, text):
-                return Str(subSeperator(writeCite(re.search(PATTERN, text).group(1))))
+def processCite(key, value, fmt, meta):
+    if key == 'Para':
+        if key == 'Str' and re.search(PATTERN1, value):
+            return RawInline('latex', subSeperator(writeCite(re.search(PATTERN1, value).group(1))))
+            #if fmt == 'latex':
+        elif key == 'Str' and re.search(PATTERN1, value):
+            return RawInline('latex', subSeperator(writeCite(re.search(PATTERN2, value).group(1))))
+
+def removeSpace(key, value, fmt, meta):
+    if key == 'Space':
+        return Str("")
 
 def main():
-    toJSONFilter(processRegex)
+    toJSONFilter(processCite) # pass 1
 
 if __name__ == "__main__" :
     main()

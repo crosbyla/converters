@@ -14,7 +14,7 @@ date=[]
 start_date=[]
 date_diff=[]
 
-def extractcoords(file_name):
+def processRegex(file_name):
 
     with open(file_name) as fp:
         #read in file
@@ -58,4 +58,5 @@ def extractcoords(file_name):
         print date_diff
         print vals[2],vals[3]
     fp.close()
-extractcoords(filename)
+if __name__ == "__main__" :
+    processRegex(sys.argv)

@@ -1,37 +1,40 @@
 #!/usr/bin/python
 import sys
 import re
-import fileinput
 
 PATTERN = re.compile(r"""(\\{\\{.*\\}\\})""",re.VERBOSE)
 
-def subSeperator(string):
+def regexSep(string):
     """
         input: string (expected pattern {word, number; word, number} i.e a list of word-number pairs seperated by semicolons
         output: string with semicolons replaced by commas and word, number collapsed to wordnumber
     """
-    return re.sub( r';', r',' , re.sub(r'(\s*,\s*)', r'', string) )
+    return re.sub(r'(\s*;\s*)', r',', re.sub( r'\s*,\s*', r'' , re.sub(r'\\#\d+\s*', r'', string) ) )
 
-def writeCite(string):
-    return string.replace(r'\{\{',r'\cite{').replace(r'\}\}',r'}')
+def regexCite(string):
+    return re.sub(r'\\{\\{\s*',r'~\cite{', re.sub( r'\s*\\}\\}',r'}', string) )
 
-def processFile(file_name):
-    outfile = file_name[:-3] + 'text' + file_name[-3:]
+def processFile(file_name, outfile = None):
+    if outfile is None:
+       outfile = file_name
 
     with open(file_name) as fp:
         f = fp.read()
 
     lines = f.split('\n')
-
     with open(outfile, 'w') as fp:
         for line in lines:
-            if re.search(PATTERN, line):
-                line = subSeperator(writeCite(re.search(PATTERN, line).group(2)))
-            fp.write(line)
+            m = re.search(PATTERN,line)
+            if m:
+               subst = regexCite(regexSep(m.group(1)))
+               line = line[:m.start(1)] + subst + line[m.end(1):]
+            fp.write(line + '\n')
 
 def main():
-    if len(sys.argv) >= 2:
+    if len(sys.argv) == 2:
         processFile(sys.argv[1])
+    elif len(sys.argv) == 3:
+        processFile(sys.argv[1], sys.argv[2])
     else :
         print( "no file specified" )
         raise ValueError

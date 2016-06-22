@@ -1,0 +1,3 @@
+[console_scripts]
+cite-preprocess = cite_preprocess.cite_preprocess:main
+

@@ -9,7 +9,7 @@ def regexSep(string):
         input: string (expected pattern {word, number; word, number} i.e a list of word-number pairs seperated by semicolons
         output: string with semicolons replaced by commas and word, number collapsed to wordnumber
     """
-    return re.sub(r'(\s*;\s*)', r',', re.sub( r'\s*,\s*', r'' , re.sub(r'\\#\d+\s*', r'', string) ) )
+    return re.sub( r'\(', r'$', re.sub(r'\)', r'$', re.sub(r'(\s*;\s*)', r',', re.sub( r'\s*,\s*', r'' , re.sub(r'\\#\d+\s*', r'', string) ) ) ) )
 
 def regexCite(string):
     return re.sub(r'\\{\\{\s*',r'~\cite{', re.sub( r'\s*\\}\\}',r'}', string) )

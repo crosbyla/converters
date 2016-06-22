@@ -2,7 +2,7 @@
 import sys
 import re
 
-PATTERN = re.compile(r"""({{.*}})""",re.VERBOSE)
+PATTERN = re.compile(r"""(^[a-zA-Z0-9\s]*{{.*}})""",re.VERBOSE)
 
 def regexSep(string):
     """
@@ -12,7 +12,7 @@ def regexSep(string):
     return re.sub(r'(\s*;\s*)', r',', re.sub( r'\s*,\s*', r'' , re.sub(r'\\#\d+\s*', r'', string) ) )
 
 def regexCite(string):
-    return re.sub(r'{{\s*',r'~\cite{', re.sub( r'\s*}}',r'}', string) )
+    return re.sub(r'{{\s*',r'[@', re.sub( r'\s*}}',r']', string) )
 
 def processFile(file_name, outfile = None):
 

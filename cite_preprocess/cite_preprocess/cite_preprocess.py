@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import sys
 import re
 
@@ -41,8 +41,7 @@ def main():
     elif len(sys.argv) == 3:
         processFile(sys.argv[1], sys.argv[2])
     else :
-        print( "no file specified" )
-        raise ValueError
+        raise ValueError( "no file specified" )
 
 if __name__ == "__main__" :
     main()

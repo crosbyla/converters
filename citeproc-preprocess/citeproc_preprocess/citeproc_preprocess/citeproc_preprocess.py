@@ -2,7 +2,7 @@
 import sys
 import re
 
-PATTERN = re.compile(r"""([a-zA-Z0-9\s]*{{.*}})""",re.VERBOSE)
+PATTERN = re.compile(r"""([a-zA-Z0-9]\s)+({{.*}})""",re.VERBOSE)
 
 def regexSep(string):
     """
@@ -31,8 +31,8 @@ def processFile(file_name, outfile = None):
 def processLine(line):
     m = re.search(PATTERN,line)
     if m:
-        subst = regexCite(regexSep(m.group(1)))
-        line = line[:m.start(1)] + subst + line[m.end(1):]
+        subst = regexCite(regexSep(m.group(2)))
+        line = line[:m.start()] + m.group(1) + subst + line[m.end():]
     return line
 
 def main():

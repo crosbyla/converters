@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 setup(
-    name = "citeproc-postprocess",
+    name = "title-postprocess",
     version = "1.0",
-    packages = ['citeproc_postprocess'],
-    entry_points = {'console_scripts': ['citeproc-postprocess=citeproc_postprocess.citeproc_postprocess:main'] },
+    packages = ['title_postprocess'],
+    entry_points = {'console_scripts': ['title-postprocess=title_postprocess.title_postprocess:main'] },
 
     package_data = {
         # If any package contains *.txt or *.rst files, include them:

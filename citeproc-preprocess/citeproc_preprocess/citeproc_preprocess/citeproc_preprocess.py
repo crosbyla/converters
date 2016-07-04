@@ -2,14 +2,14 @@
 import sys
 import re
 
-PATTERN = re.compile(r"""(^[a-zA-Z0-9\s]*{{.*}})""",re.VERBOSE)
+PATTERN = re.compile(r"""([a-zA-Z0-9]\s)+({{.*}})""",re.VERBOSE)
 
 def regexSep(string):
     """
         input: string (expected pattern {word, number; word, number} i.e a list of word-number pairs seperated by semicolons
         output: string with semicolons replaced by commas and word, number collapsed to wordnumber
     """
-    return re.sub(r'(\s*;\s*)', r',', re.sub( r'\s*,\s*', r'' , re.sub(r'\\#\d+\s*', r'', string) ) )
+    return re.sub(r'(\s*;\s*)', r';@', re.sub( r'\s*,\s*', r'' , re.sub(r'\\#\d+\s*', r'', string) ) )
 
 def regexCite(string):
     return re.sub(r'{{\s*',r'[@', re.sub( r'\s*}}',r']', string) )
@@ -31,8 +31,8 @@ def processFile(file_name, outfile = None):
 def processLine(line):
     m = re.search(PATTERN,line)
     if m:
-        subst = regexCite(regexSep(m.group(1)))
-        line = line[:m.start(1)] + subst + line[m.end(1):]
+        subst = regexCite(regexSep(m.group(2)))
+        line = line[:m.start()] + m.group(1) + subst + line[m.end():]
     return line
 
 def main():

@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 import sys
+import re
 from numpy import array, dot, min as nmin, max as nmax
 from pandas.io.parsers import read_csv
 from math import sin, cos, radians
+
+pattern=re.compile(r"""(\w+).xyz""",re.VERBOSE)
 
 def convert2cif(file_name, rot=0):
     rot = float(rot)
@@ -14,8 +17,8 @@ def convert2cif(file_name, rot=0):
     outfile_name = file_name + "_coords.cif"
 
     trans = array([     [cos(radians(rot)), -sin(radians(rot)), 0],
-                        [sin(radians(rot)), cos(radians(rot)), 0],
-                        [0, 0, 1] ])
+                        [sin(radians(rot)), cos(radians(rot)),  0],
+                        [0,                 0,                  1] ])
     coordArray = dot(coordArray,trans)
 
     x = coordArray[:,0]
@@ -61,10 +64,20 @@ def convert2cif(file_name, rot=0):
 
     fp.close()
 
+def openFileDialogue():
+    root=tk.Tk()
+    root.withdraw()
+    return filedialog.askopenfilename()
+    
+
 if __name__ == "__main__" :
+    rot = 0.0
     if len(sys.argv) == 3:
-        convert2cif(sys.argv[1], sys.argv[2])
+        fname = sys.argv[1]
+        rot = sys.argv[2] 
     elif len(sys.argv) == 2:
-        convert2cif(sys.argv[1])
+        fname = sys.argv[1]
     else :
-        raise ValueError
+        fname = openFileDialogue()
+
+    convert2cif(fname, rot)

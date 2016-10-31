@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import sys
 import re
+import tkinter as tk
+from tkinter import filedialog
+
 from numpy import array, dot, min as nmin, max as nmax
 from pandas.io.parsers import read_csv
 from math import sin, cos, radians
@@ -68,7 +71,7 @@ def openFileDialogue():
     root=tk.Tk()
     root.withdraw()
     return filedialog.askopenfilename()
-    
+ 
 
 if __name__ == "__main__" :
     rot = 0.0

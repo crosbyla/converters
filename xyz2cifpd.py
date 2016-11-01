@@ -2,31 +2,33 @@
 import sys
 import re
 import tkinter as tk
-from tkinter import filedialog
+import pandas as pd
 
+from tkinter import filedialog
 from numpy import array, dot, min as nmin, max as nmax
 from pandas.io.parsers import read_csv
 from math import sin, cos, radians
 
-pattern=re.compile(r"""(\w+).xyz""",re.VERBOSE)
+pattern = re.compile(r"""(\w+).xyz""", re.VERBOSE)
+
 
 def convert2cif(file_name, rot=0):
     rot = float(rot)
     df = read_csv(file_name, skiprows=2, header=None, delim_whitespace=True)
 
-    elemArray = df.values[:,0].astype(str, copy=False)
-    coordArray = df.values[:,1:].astype(float, copy=False)
+    elemArray = df.values[:, 0].astype(str, copy=False)
+    coordArray = df.values[:, 1:].astype(float, copy=False)
 
     outfile_name = file_name + "_coords.cif"
 
-    trans = array([     [cos(radians(rot)), -sin(radians(rot)), 0],
-                        [sin(radians(rot)), cos(radians(rot)),  0],
-                        [0,                 0,                  1] ])
-    coordArray = dot(coordArray,trans)
+    trans = array([[cos(radians(rot)), -sin(radians(rot)), 0],
+                   [sin(radians(rot)), cos(radians(rot)),  0],
+                   [0,                 0,                  1]])
+    coordArray = dot(coordArray, trans)
 
-    x = coordArray[:,0]
-    y = coordArray[:,1]
-    z = coordArray[:,2]
+    x = coordArray[:, 0]
+    y = coordArray[:, 1]
+    z = coordArray[:, 2]
 
     xlim = nmax(x) - nmin(x)
     ylim = nmax(y) - nmin(y)
@@ -39,48 +41,58 @@ def convert2cif(file_name, rot=0):
     z -= nmin(z)
     z /= zlim
 
-    fp = open(outfile_name,'w')
-    print(''.join("data_" + file_name + "_phase\n"), file=fp)
-    print("_symmetry_space_group_name_H-M   'P 1'", file=fp)
+    header = """data_{file_name}_phase
 
-    print("%s %f" % ( '_cell_length_a' , xlim ), file=fp)
-    print("%s %f" % ( '_cell_length_b' , ylim ), file=fp)
-    print("%s %f" % ( '_cell_length_c' , zlim ), file=fp)
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a  {xlim:>3.10f}
+_cell_length_b  {ylim:>3.10f}
+_cell_length_c  {zlim:>3.10f}
+_cell_angle_alpha  90.00
+_cell_angle_beta   90.00
+_cell_angle_gamma  90.00
 
-    print("%s %f" % ( '_cell_angle_alpha' , 90) , file=fp)
-    print("%s %f" % ( '_cell_angle_beta' , 90) , file=fp)
-    print("%s %f" % ( '_cell_angle_gamma' , 90) , file=fp)
+loop_
+_symmetry_equiv_pos_as_xyz
+    'x, y, z'
+loop_
+    _atom_site_label
+    _atom_site_fract_x
+    _atom_site_fract_y
+    _atom_site_fract_z
+    _atom_site_occupancy
+    _atom_site_type_symbol
+""".format(file_name=file_name, xlim=xlim, ylim=ylim, zlim=zlim)
 
-    print("\nloop_\n_symmetry_equiv_pos_as_xyz", file=fp)
-    print("    'x, y, z'", file=fp)
+    write_header(outfile_name, header)
 
-    print("\nloop_\n    _atom_site_label", file=fp)
-    print("    _atom_site_fract_x", file=fp)
-    print("    _atom_site_fract_y", file=fp)
-    print("    _atom_site_fract_z", file=fp)
-    print("    _atom_site_occupancy", file=fp)
-    print("    _atom_site_type_symbol", file=fp)
+    df_new = pd.DataFrame({'elem': elemArray, 'x': x, 'y': y, 'z': z})
+    df_new = df_new[df_new != 1].dropna()
+    df_new['occ'] = 1.0
+    df_new['label'] = df_new['elem']
 
-    for i, elem in enumerate(elemArray[:]):
-        print("%s %1.6f %1.6f %1.6f %1.6f %s" % (elem, x[i], y[i], z[i], 1.0, elem),
-            file=fp)
+    df_new.to_csv(outfile_name, mode='a', header=False,
+                  float_format='%.10f', index=False, sep=" ", escapechar=" ")
 
-    fp.close()
+
+def write_header(outfile_name, header):
+    with open(outfile_name, 'w') as fp:
+        fp.write(header)
+
 
 def openFileDialogue():
-    root=tk.Tk()
+    root = tk.Tk()
     root.withdraw()
     return filedialog.askopenfilename()
- 
 
-if __name__ == "__main__" :
+
+if __name__ == "__main__":
     rot = 0.0
     if len(sys.argv) == 3:
         fname = sys.argv[1]
-        rot = sys.argv[2] 
+        rot = sys.argv[2]
     elif len(sys.argv) == 2:
         fname = sys.argv[1]
-    else :
+    else:
         fname = openFileDialogue()
 
     convert2cif(fname, rot)

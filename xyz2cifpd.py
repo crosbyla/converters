@@ -65,13 +65,13 @@ loop_
 
     write_header(outfile_name, header)
 
-    df_new = pd.DataFrame({'elem': elemArray, 'x': x, 'y': y, 'z': z})
-    df_new = df_new[df_new != 1].dropna()
-    df_new['occ'] = 1.0
-    df_new['label'] = df_new['elem']
+    df = pd.DataFrame({'elem': elemArray, 'x': x, 'y': y, 'z': z})
+    df = df[df != 1].dropna()
+    df['occ'] = 1.0
+    df['label'] = df['elem']
 
-    df_new.to_csv(outfile_name, mode='a', header=False,
-                  float_format='%.10f', index=False, sep=" ", escapechar=" ")
+    df.to_csv(outfile_name, mode='a', header=False,
+              float_format='%.10f', index=False, sep=" ", escapechar=" ")
 
 
 def write_header(outfile_name, header):

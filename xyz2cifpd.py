@@ -12,6 +12,17 @@ from math import sin, cos, radians
 pattern = re.compile(r"""(\w+).xyz""", re.VERBOSE)
 
 
+def write_header(outfile_name, header):
+    with open(outfile_name, 'w') as fp:
+        fp.write(header)
+
+
+def openFileDialogue():
+    root = tk.Tk()
+    root.withdraw()
+    return filedialog.askopenfilename()
+
+
 def convert2cif(file_name, rot=0):
     rot = float(rot)
     df = read_csv(file_name, skiprows=2, header=None, delim_whitespace=True)
@@ -72,17 +83,6 @@ loop_
 
     df.to_csv(outfile_name, mode='a', header=False,
               float_format='%.10f', index=False, sep=" ", escapechar=" ")
-
-
-def write_header(outfile_name, header):
-    with open(outfile_name, 'w') as fp:
-        fp.write(header)
-
-
-def openFileDialogue():
-    root = tk.Tk()
-    root.withdraw()
-    return filedialog.askopenfilename()
 
 
 if __name__ == "__main__":
